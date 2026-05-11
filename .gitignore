@@ -1,0 +1,12 @@
+# Arquivos gerados pelo Flex
+lex.yy.c
+
+# Arquivos gerados pelo Bison
+parser.tab.c
+parser.tab.h
+
+# Executável
+compilador
+
+# Arquivos objeto
+*.o
