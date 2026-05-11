@@ -1,5 +1,4 @@
 %{
-#include "parser.tab.h"
 #include <stdio.h>
 #include <stdlib.h>
 %}
@@ -12,66 +11,168 @@ num         {digit}+(\.{digit}+)?([eE][+-]?{digit}+)?
 
 %%
 
-"program"      { return PROGRAM; }
-"var"          { return VAR; }
-"integer"      { return INTEGER; }
-"real"         { return REAL; }
-"procedure"    { return PROCEDURE; }
-"begin"        { return BEGINN; }
-"end"          { return END; }
-"if"           { return IF; }
-"then"         { return THEN; }
-"else"         { return ELSE; }
-"while"        { return WHILE; }
-"do"           { return DO; }
+"program" {
+    printf("TOKEN -> PROGRAM\n");
+}
 
-"or"           { return OR; }
-"and"          { return AND; }
-"not"          { return NOT; }
-"div"          { return DIV; }
-"mod"          { return MOD; }
+"var" {
+    printf("TOKEN -> VAR\n");
+}
 
-":="           { return ASSIGN; }
+"integer" {
+    printf("TOKEN -> INTEGER\n");
+}
 
-">="           { return GE; }
-"<="           { return LE; }
-"<>"           { return NE; }
-">"            { return GT; }
-"<"            { return LT; }
-"="            { return EQ; }
+"real" {
+    printf("TOKEN -> REAL\n");
+}
 
-"+"            { return '+'; }
-"-"            { return '-'; }
-"*"            { return '*'; }
-"/"            { return '/'; }
+"procedure" {
+    printf("TOKEN -> PROCEDURE\n");
+}
 
-";"            { return ';'; }
-":"            { return ':'; }
-","            { return ','; }
-"."            { return '.'; }
+"begin" {
+    printf("TOKEN -> BEGIN\n");
+}
 
-"("            { return '('; }
-")"            { return ')'; }
+"end" {
+    printf("TOKEN -> END\n");
+}
+
+"if" {
+    printf("TOKEN -> IF\n");
+}
+
+"then" {
+    printf("TOKEN -> THEN\n");
+}
+
+"else" {
+    printf("TOKEN -> ELSE\n");
+}
+
+"while" {
+    printf("TOKEN -> WHILE\n");
+}
+
+"do" {
+    printf("TOKEN -> DO\n");
+}
+
+"or" {
+    printf("TOKEN -> OR\n");
+}
+
+"and" {
+    printf("TOKEN -> AND\n");
+}
+
+"not" {
+    printf("TOKEN -> NOT\n");
+}
+
+"div" {
+    printf("TOKEN -> DIV\n");
+}
+
+"mod" {
+    printf("TOKEN -> MOD\n");
+}
+
+":=" {
+    printf("TOKEN -> ASSIGN\n");
+}
+
+">=" {
+    printf("TOKEN -> GE\n");
+}
+
+"<=" {
+    printf("TOKEN -> LE\n");
+}
+
+"<>" {
+    printf("TOKEN -> NE\n");
+}
+
+">" {
+    printf("TOKEN -> GT\n");
+}
+
+"<" {
+    printf("TOKEN -> LT\n");
+}
+
+"=" {
+    printf("TOKEN -> EQ\n");
+}
+
+"+" {
+    printf("TOKEN -> PLUS\n");
+}
+
+"-" {
+    printf("TOKEN -> MINUS\n");
+}
+
+"*" {
+    printf("TOKEN -> MULT\n");
+}
+
+"/" {
+    printf("TOKEN -> DIVIDE\n");
+}
+
+";" {
+    printf("TOKEN -> SEMICOLON\n");
+}
+
+":" {
+    printf("TOKEN -> COLON\n");
+}
+
+"," {
+    printf("TOKEN -> COMMA\n");
+}
+
+"." {
+    printf("TOKEN -> DOT\n");
+}
+
+"(" {
+    printf("TOKEN -> LPAREN\n");
+}
+
+")" {
+    printf("TOKEN -> RPAREN\n");
+}
 
 {num} {
-    yylval.num = atof(yytext);
-    return NUM;
+    printf("TOKEN -> NUM (%s)\n", yytext);
 }
 
 {id} {
-    yylval.str = strdup(yytext);
-    return ID;
+    printf("TOKEN -> ID (%s)\n", yytext);
 }
 
-"{"[^}]*"}"    { }
+"{"[^}]*"}" {
+    printf("TOKEN -> COMMENT\n");
+}
 
-[ \t\n\r]+     { }
+[ \t\n\r]+ {
+    /* Ignora espaços */
+}
 
 . {
-    printf("Caractere inválido: %s\n", yytext);
+    printf("ERRO LEXICO -> Caractere invalido: %s\n", yytext);
 }
 
 %%
+
+int main() {
+    yylex();
+    return 0;
+}
 
 int yywrap() {
     return 1;
